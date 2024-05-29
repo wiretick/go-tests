@@ -2,16 +2,32 @@ package main
 
 import "fmt"
 
-const englishIntro = "Hello"
+const (
+	langNo         = "Norwegian"
+	langFr         = "French"
+	englishIntro   = "Hello"
+	frenchIntro    = "Bonjour"
+	norwegianIntro = "Hei"
+	defaultName    = "World"
+)
 
-func hello(name string) string {
-	if name == "" {
-		return englishIntro + " World"
+func hello(name, lang string) string {
+	var intro string
+	if lang == langNo {
+		intro = norwegianIntro
+	} else if lang == langFr {
+		intro = frenchIntro
+	} else {
+		intro = englishIntro
 	}
 
-	return fmt.Sprintf("%s %s", englishIntro, name)
+	if name == "" {
+		name = defaultName
+	}
+
+	return fmt.Sprintf("%s %s", intro, name)
 }
 
 func main() {
-	fmt.Println(hello("Someone"))
+	fmt.Println(hello("Someone", ""))
 }
