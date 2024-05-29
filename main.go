@@ -3,15 +3,27 @@ package main
 import "fmt"
 
 const (
-	langNo         = "Norwegian"
-	langFr         = "French"
+	langNo = "Norwegian"
+	langFr = "French"
+
 	englishIntro   = "Hello"
 	frenchIntro    = "Bonjour"
 	norwegianIntro = "Hei"
-	defaultName    = "World"
+
+	defaultName = "World"
 )
 
 func hello(name, lang string) string {
+	intro := generateIntro(lang)
+
+	if name == "" {
+		name = defaultName
+	}
+
+	return fmt.Sprintf("%s %s", intro, name)
+}
+
+func generateIntro(lang string) string {
 	var intro string
 	switch lang {
 	case langNo:
@@ -22,11 +34,7 @@ func hello(name, lang string) string {
 		intro = englishIntro
 	}
 
-	if name == "" {
-		name = defaultName
-	}
-
-	return fmt.Sprintf("%s %s", intro, name)
+	return intro
 }
 
 func main() {
