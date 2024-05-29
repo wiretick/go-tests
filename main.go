@@ -13,11 +13,12 @@ const (
 
 func hello(name, lang string) string {
 	var intro string
-	if lang == langNo {
+	switch lang {
+	case langNo:
 		intro = norwegianIntro
-	} else if lang == langFr {
+	case langFr:
 		intro = frenchIntro
-	} else {
+	default:
 		intro = englishIntro
 	}
 
