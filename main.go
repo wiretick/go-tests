@@ -13,7 +13,7 @@ const (
 	defaultName = "World"
 )
 
-func hello(name, lang string) string {
+func Hello(name, lang string) string {
 	intro := generateIntro(lang)
 
 	if name == "" {
@@ -38,5 +38,5 @@ func generateIntro(lang string) string {
 }
 
 func main() {
-	fmt.Println(hello("Someone", ""))
+	fmt.Println(Hello("Someone", ""))
 }

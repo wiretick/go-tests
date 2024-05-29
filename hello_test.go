@@ -4,28 +4,28 @@ import "testing"
 
 func TestHello(t *testing.T) {
 	t.Run("say hello to person", func(t *testing.T) {
-		got := hello("Jon", "")
+		got := Hello("Jon", "")
 		want := "Hello Jon"
 
 		assertTwoStrings(t, got, want)
 	})
 
 	t.Run("generic greeting", func(t *testing.T) {
-		got := hello("", "")
+		got := Hello("", "")
 		want := "Hello World"
 
 		assertTwoStrings(t, got, want)
 	})
 
 	t.Run("greeting in norwegian", func(t *testing.T) {
-		got := hello("Per", "Norwegian")
+		got := Hello("Per", "Norwegian")
 		want := "Hei Per"
 
 		assertTwoStrings(t, got, want)
 	})
 
 	t.Run("greeting in french", func(t *testing.T) {
-		got := hello("Per", "French")
+		got := Hello("Per", "French")
 		want := "Bonjour Per"
 
 		assertTwoStrings(t, got, want)
