@@ -1,11 +1,9 @@
 package iteration
 
-const repeatCount = 5
-
-func Repeat(symbol string) string {
+func Repeat(symbol string, nr int) string {
 	var result string
 
-	for i := 0; i < repeatCount; i++ {
+	for i := 0; i < nr; i++ {
 		result += symbol
 	}
 
