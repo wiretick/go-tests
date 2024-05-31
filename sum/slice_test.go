@@ -10,7 +10,7 @@ func TestSum(t *testing.T) {
 	got := Sum(numbers)
 	want := 18
 
-	assert(t, got, want, numbers)
+	assert(t, want, got, numbers)
 }
 
 func TestSumAll(t *testing.T) {
@@ -21,13 +21,13 @@ func TestSumAll(t *testing.T) {
 	want := []int{18, 15}
 
 	if !slices.Equal(got, want) {
-		t.Errorf("got %d, want %d, given %v and %v", got, want, numbers1, numbers2)
+		t.Errorf("want %d, got %d, given %v and %v", want, got, numbers1, numbers2)
 	}
 }
 
 func assert(t testing.TB, got, want int, numbers []int) {
 	t.Helper()
 	if got != want {
-		t.Errorf("got %d, want %d, given %v", got, want, numbers)
+		t.Errorf("want %d, got %d, given %v", want, got, numbers)
 	}
 }
