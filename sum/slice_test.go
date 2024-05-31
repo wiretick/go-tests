@@ -10,7 +10,9 @@ func TestSum(t *testing.T) {
 	got := Sum(numbers)
 	want := 18
 
-	assert(t, want, got, numbers)
+	if got != want {
+		t.Errorf("want %d, got %d, given %v", want, got, numbers)
+	}
 }
 
 func TestSumAll(t *testing.T) {
@@ -20,9 +22,7 @@ func TestSumAll(t *testing.T) {
 	got := SumAll(numbers1, numbers2)
 	want := []int{18, 15}
 
-	if !slices.Equal(got, want) {
-		t.Errorf("want %d, got %d, given %v and %v", want, got, numbers1, numbers2)
-	}
+	assertSlices(t, want, got)
 }
 
 func TestSumAllTails(t *testing.T) {
@@ -30,24 +30,20 @@ func TestSumAllTails(t *testing.T) {
 		want := []int{8, 10}
 		got := SumAllTails([]int{4, 8}, []int{0, 10})
 
-		if !slices.Equal(want, got) {
-			t.Errorf("want %d, got %d", want, got)
-		}
+		assertSlices(t, want, got)
 	})
 
 	t.Run("safely sum empty slices", func(t *testing.T) {
 		want := []int{0, 3}
 		got := SumAllTails([]int{}, []int{0, 1, 2})
 
-		if !slices.Equal(want, got) {
-			t.Errorf("want %d, got %d", want, got)
-		}
+		assertSlices(t, want, got)
 	})
 }
 
-func assert(t testing.TB, got, want int, numbers []int) {
+func assertSlices(t testing.TB, want, got []int) {
 	t.Helper()
-	if got != want {
-		t.Errorf("want %d, got %d, given %v", want, got, numbers)
+	if !slices.Equal(want, got) {
+		t.Errorf("want %d, got %d", want, got)
 	}
 }
