@@ -48,7 +48,7 @@ func assertError(t testing.TB, got, want error) {
 		t.Fatal("missing required error")
 	}
 
-	if got.Error() != want.Error() {
+	if got != want {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
