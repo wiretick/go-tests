@@ -19,9 +19,23 @@ func TestSearch(t *testing.T) {
 		want := ErrUnknownTerm
 
 		if got != want {
-			t.Errorf("expected unknown search term error")
+			t.Errorf("want %q, got %q", want, got)
 		}
 	})
+}
+
+func TestAdd(t *testing.T) {
+	dict := Dictionary{}
+	dict.Add("new term", "new definition")
+
+	want := "new definition"
+	got, err := dict.Search("new term")
+
+	if err != nil {
+		t.Fatalf("Should not error: %q", err)
+	}
+
+	assertString(t, got, want)
 }
 
 func assertString(t testing.TB, got, want string) {

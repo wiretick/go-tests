@@ -7,11 +7,16 @@ type Dictionary map[string]string
 var ErrUnknownTerm = errors.New("Unknown search term")
 
 func (d Dictionary) Search(term string) (string, error) {
-	result := d[term]
+	result, ok := d[term]
 
-	if result == "" {
-		return result, ErrUnknownTerm
+	if !ok {
+		return "", ErrUnknownTerm
 	}
 
 	return result, nil
+}
+
+func (d Dictionary) Add(term, definition string) error {
+	d[term] = definition
+	return nil
 }
