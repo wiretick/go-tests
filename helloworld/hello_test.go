@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"bytes"
+	"testing"
+)
 
 func TestHello(t *testing.T) {
 	t.Run("say hello to person", func(t *testing.T) {
@@ -30,6 +33,17 @@ func TestHello(t *testing.T) {
 
 		assertTwoStrings(t, got, want)
 	})
+}
+
+func TestGreet(t *testing.T) {
+	// Testing dependency injection
+	buffer := bytes.Buffer{}
+	Greet(&buffer, "Tom")
+
+	got := buffer.String()
+	want := "Hello, Tom"
+
+	assertTwoStrings(t, got, want)
 }
 
 func assertTwoStrings(t testing.TB, got, want string) {

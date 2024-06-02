@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+	"os"
+)
 
 const (
 	langNo = "Norwegian"
@@ -37,6 +41,12 @@ func generateIntro(lang string) string {
 	return intro
 }
 
+func Greet(w io.Writer, name string) {
+	fmt.Fprintf(w, "Hello, %s", name)
+}
+
 func main() {
 	fmt.Println(Hello("Someone", ""))
+
+	Greet(os.Stdout, "Sarah")
 }
