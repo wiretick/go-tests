@@ -1,13 +1,18 @@
 package maps
 
-import "errors"
+const ( // Makes sure the message does not get changed later
+	ErrUnknownTerm   = DictionaryErr("Unknown search term")
+	ErrAlreadyExists = DictionaryErr("Term already exists")
+)
+
+type DictionaryErr string
+
+// This makes our custom error compatible with the error interface
+func (e DictionaryErr) Error() string {
+	return string(e)
+}
 
 type Dictionary map[string]string
-
-var (
-	ErrUnknownTerm   = errors.New("Unknown search term")
-	ErrAlreadyExists = errors.New("Term already exists")
-)
 
 func (d Dictionary) Search(term string) (string, error) {
 	result, ok := d[term]
