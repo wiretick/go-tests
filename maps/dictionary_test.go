@@ -25,17 +25,33 @@ func TestSearch(t *testing.T) {
 }
 
 func TestAdd(t *testing.T) {
-	dict := Dictionary{}
-	dict.Add("new term", "new definition")
+	t.Run("add new term", func(t *testing.T) {
+		term := "new term"
+		def := "new definition"
+		dict := Dictionary{}
 
-	want := "new definition"
-	got, err := dict.Search("new term")
+		dict.Add(term, def)
+		got, err := dict.Search(term)
 
-	if err != nil {
-		t.Fatalf("Should not error: %q", err)
-	}
+		if err != nil {
+			t.Fatalf("Should not error: %q", err)
+		}
 
-	assertString(t, got, want)
+		assertString(t, got, def)
+	})
+
+	t.Run("add existing term", func(t *testing.T) {
+		term := "new term"
+		def := "new definition"
+		dict := Dictionary{term: def}
+
+		got := dict.Add(term, def)
+		want := ErrAlreadyExists
+
+		if got != want {
+			t.Errorf("want %q, got %q", want, got)
+		}
+	})
 }
 
 func assertString(t testing.TB, got, want string) {
