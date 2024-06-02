@@ -30,7 +30,10 @@ func TestAdd(t *testing.T) {
 		def := "new definition"
 		dict := Dictionary{}
 
-		dict.Add(term, def)
+		what := dict.Add(term, def)
+		if what != nil {
+			t.Fatal("what", what)
+		}
 		got, err := dict.Search(term)
 
 		if err != nil {
