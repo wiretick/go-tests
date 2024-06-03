@@ -25,8 +25,6 @@ func (d *DefaultSleeper) Sleep() {
 func Countdown(w io.Writer, sleep Sleeper) {
 	for i := countdown; i > 0; i-- {
 		fmt.Fprintf(w, "%d ", i)
-	}
-	for i := countdown; i > 0; i-- {
 		sleep.Sleep()
 	}
 	fmt.Fprintf(w, ending)
