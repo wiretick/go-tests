@@ -4,7 +4,16 @@ import (
 	"bytes"
 	"slices"
 	"testing"
+	"time"
 )
+
+type SpyTime struct {
+	durationSlept time.Duration
+}
+
+func (s *SpyTime) Sleep(duration time.Duration) {
+	s.durationSlept = duration
+}
 
 type SpyCountdownOperations struct {
 	Calls []string
@@ -57,4 +66,16 @@ func TestCountdown(t *testing.T) {
 			t.Errorf("want %v, got %v", want, spySleep.Calls)
 		}
 	})
+}
+
+func TestConfigurableSleeper(t *testing.T) {
+	sleepTime := 5 * time.Second
+
+	spyTime := &SpyTime{}
+	sleeper := ConfigurableSleeper{sleepTime, spyTime.Sleep}
+	sleeper.Sleep()
+
+	if spyTime.durationSlept != sleepTime {
+		t.Errorf("should have slept for %v but slept for %v", sleepTime, spyTime.durationSlept)
+	}
 }
