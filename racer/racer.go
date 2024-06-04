@@ -4,24 +4,20 @@ import (
 	"net/http"
 )
 
+func ping(url string) chan struct{} {
+	res := make(chan struct{})
+	go func() {
+		http.Get(url)
+		close(res)
+	}()
+	return res
+}
+
 func Racer(one, two string) string {
-	resOne := make(chan struct{})
-	resTwo := make(chan struct{})
-
-	go func() {
-		http.Get(one)
-		close(resOne)
-	}()
-
-	go func() {
-		http.Get(two)
-		close(resTwo)
-	}()
-
 	select {
-	case <-resOne:
+	case <-ping(one):
 		return one
-	case <-resTwo:
+	case <-ping(two):
 		return two
 	}
 }
