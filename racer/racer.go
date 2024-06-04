@@ -5,14 +5,15 @@ import (
 	"time"
 )
 
-func Racer(one, two string) string {
+func measureResTime(url string) time.Duration {
 	startOne := time.Now()
-	http.Get(one)
-	tookOne := time.Since(startOne)
+	http.Get(url)
+	return time.Since(startOne)
+}
 
-	startTwo := time.Now()
-	http.Get(two)
-	tookTwo := time.Since(startTwo)
+func Racer(one, two string) string {
+	tookOne := measureResTime(one)
+	tookTwo := measureResTime(two)
 
 	if tookOne < tookTwo {
 		return one
