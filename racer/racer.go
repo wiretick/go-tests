@@ -2,12 +2,12 @@ package racer
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"time"
 )
 
 var ErrTimedOut = errors.New("Request timed out")
+var defaultTimeout = 10 * time.Second
 
 func ping(url string) chan struct{} {
 	res := make(chan struct{})
@@ -18,13 +18,17 @@ func ping(url string) chan struct{} {
 	return res
 }
 
-func Racer(one, two string, timeout time.Duration) (string, error) {
+func Racer(one, two string) (string, error) {
+	return ConfigurableRacer(one, two, defaultTimeout)
+}
+
+func ConfigurableRacer(one, two string, timeout time.Duration) (string, error) {
 	select {
 	case <-ping(one):
 		return one, nil
 	case <-ping(two):
 		return two, nil
 	case <-time.After(timeout):
-		return "", fmt.Errorf("timed out")
+		return "", ErrTimedOut
 	}
 }
