@@ -25,7 +25,7 @@ func TestRacer(t *testing.T) {
 		slow := slowServer.URL
 		fast := fastServer.URL
 
-		got, _ := Racer(slow, fast)
+		got, _ := Racer(slow, fast, 20*time.Millisecond)
 		want := fast
 
 		if want != got {
@@ -34,15 +34,15 @@ func TestRacer(t *testing.T) {
 	})
 
 	t.Run("error if times out", func(t *testing.T) {
-		slowServer := timedServer(11 * time.Second)
+		slowServer := timedServer(10 * time.Millisecond)
 		defer slowServer.Close()
 
-		fastServer := timedServer(12 * time.Second)
+		fastServer := timedServer(10 * time.Millisecond)
 		defer fastServer.Close()
 
-		_, err := Racer(slowServer.URL, fastServer.URL)
+		_, err := Racer(slowServer.URL, fastServer.URL, 0*time.Millisecond)
 
-		if err == nil {
+		if err == ErrTimedOut {
 			t.Errorf("expected error, but got none")
 		}
 	})
