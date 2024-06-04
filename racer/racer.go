@@ -2,22 +2,26 @@ package racer
 
 import (
 	"net/http"
-	"time"
 )
 
-func measureResTime(url string) time.Duration {
-	startOne := time.Now()
-	http.Get(url)
-	return time.Since(startOne)
-}
-
 func Racer(one, two string) string {
-	tookOne := measureResTime(one)
-	tookTwo := measureResTime(two)
+	resOne := make(chan struct{})
+	resTwo := make(chan struct{})
 
-	if tookOne < tookTwo {
+	go func() {
+		http.Get(one)
+		close(resOne)
+	}()
+
+	go func() {
+		http.Get(two)
+		close(resTwo)
+	}()
+
+	select {
+	case <-resOne:
 		return one
+	case <-resTwo:
+		return two
 	}
-
-	return two
 }
