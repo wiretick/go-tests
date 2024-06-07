@@ -60,6 +60,14 @@ func TestWalk(t *testing.T) {
 			},
 			[]string{"Timmy", "Oslo"},
 		},
+		{
+			"give me a slice",
+			[]ProfileTest{
+				{25, "Oslo"},
+				{30, "Trondheim"},
+			},
+			[]string{"Oslo", "Trondheim"},
+		},
 	}
 
 	for _, test := range cases {
