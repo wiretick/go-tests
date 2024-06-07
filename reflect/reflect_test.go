@@ -5,6 +5,16 @@ import (
 	"testing"
 )
 
+type PersonTest struct {
+	Name    string
+	Profile ProfileTest
+}
+
+type ProfileTest struct {
+	Age  int
+	City string
+}
+
 func TestWalk(t *testing.T) {
 	cases := []struct {
 		Name          string
@@ -12,7 +22,7 @@ func TestWalk(t *testing.T) {
 		ExpectedCalls []string
 	}{
 		{
-			"struct with only one string field",
+			"struct with one string field",
 			struct {
 				Name string
 			}{"Tom"},
@@ -25,6 +35,22 @@ func TestWalk(t *testing.T) {
 				Town string
 			}{"Tom", "Oslo"},
 			[]string{"Tom", "Oslo"},
+		},
+		{
+			"struct with int field",
+			struct {
+				Name string
+				Sum  int
+			}{"Timmy", 42},
+			[]string{"Timmy"},
+		},
+		{
+			"nested fields",
+			PersonTest{
+				"Timmy",
+				ProfileTest{31, "Oslo"},
+			},
+			[]string{"Timmy", "Oslo"},
 		},
 	}
 
